@@ -13,6 +13,7 @@ import java.util.Arrays;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.io.HexDump;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -36,6 +37,7 @@ public class ParserTest{
 	}
 
 	@Test
+	@Ignore //this is only for my sanity
 	public void hexDump() throws Exception{
 		
 		assertNotNull(rawSTL);
@@ -74,7 +76,8 @@ public class ParserTest{
 	}
 	
 	@Test
-	public void itReturnsABunchOfConversations(){
+	public void itGeneratesACorrectDisplayStandardCode(){
 		
 	}
+	
 }
