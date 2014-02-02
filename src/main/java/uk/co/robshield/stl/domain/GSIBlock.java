@@ -10,12 +10,13 @@ public class GSIBlock {
 
 	private  final CodePageNumber codePageNumber;
 	private  final DiskFormatCode diskFormatCode;
-	private  int displayStandardCode;
+	private  final DisplayStandardCode displayStandardCode;
 	
 	
-	public GSIBlock(CodePageNumber cpn, DiskFormatCode dfc){
+	public GSIBlock(CodePageNumber cpn, DiskFormatCode dfc, DisplayStandardCode dsc){
 		this.codePageNumber = cpn;
 		this.diskFormatCode = dfc;
+		this.displayStandardCode = dsc;
 	}
 
 	public CodePageNumber getCodePageNumber() {
@@ -26,9 +27,11 @@ public class GSIBlock {
 		return diskFormatCode;
 	}
 
-	public int getDisplayStandardCode() {
+	public DisplayStandardCode getDisplayStandardCode() {
 		return displayStandardCode;
 	}
+
+	
 	
 	
 }

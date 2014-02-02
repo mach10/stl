@@ -15,6 +15,7 @@ import org.apache.commons.io.HexDump;
 
 import uk.co.robshield.stl.domain.CodePageNumber;
 import uk.co.robshield.stl.domain.DiskFormatCode;
+import uk.co.robshield.stl.domain.DisplayStandardCode;
 import uk.co.robshield.stl.domain.GSIBlock;
 import uk.co.robshield.stl.domain.StlFile;
 
@@ -51,7 +52,17 @@ public class Parser {
 		
 		
 		
-		return new GSIBlock( parseCodePageNumber(gsiBlock), parseDiskFormatCode(gsiBlock));
+		return new GSIBlock( parseCodePageNumber(gsiBlock), 
+				parseDiskFormatCode(gsiBlock),
+				parseDisplayStandardCode(gsiBlock));
+	}
+
+	private DisplayStandardCode parseDisplayStandardCode(byte[] gsiBlock) {
+		final byte[] codePageNumber = Arrays.copyOfRange(gsiBlock, 12, 13);
+		//to get the code, we take chars 2,4 and 6 of the Hex value and concat
+		final String cpn = Hex.encodeHexString( codePageNumber );
+		
+		return new DisplayStandardCode(cpn);
 	}
 
 	private CodePageNumber parseCodePageNumber(final byte[] gsiBlock) {

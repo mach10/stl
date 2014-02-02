@@ -20,64 +20,42 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertNotNull;
 
 import uk.co.robshield.stl.domain.CodePageNumber;
+import uk.co.robshield.stl.domain.DisplayStandardCode;
 import uk.co.robshield.stl.domain.StlFile;
 
-public class ParserTest{
-	
+public class ParserTest {
+
 	public static final String FILENAME = "stlFile.stl";
 	private URL rawSTL;
 	private Path stlInput;
 	private Parser undertest;
-	
+
 	@Before
-	public void setUp(){
+	public void setUp() {
 		rawSTL = ClassLoader.getSystemResource(FILENAME);
 		stlInput = new File(rawSTL.getPath()).toPath();
 		undertest = new Parser(stlInput);
 	}
 
 	@Test
-	@Ignore //this is only for my sanity
-	public void hexDump() throws Exception{
-		
-		assertNotNull(rawSTL);
-		assertNotNull(stlInput);
-		OutputStream out = new ByteArrayOutputStream();
-		//byte[] data = new byte[(int) stlInput.toFile().length()];
-		byte[] data = new byte[1024];
-		
-		InputStream in = new FileInputStream(stlInput.toFile());
-		in.read(data);
-		HexDump.dump(data, 0, out, 0);
-		//System.out.println(out);
-		final byte[] dfc = Arrays.copyOfRange(data, 3, 11);
-		
-		StringBuilder b = new StringBuilder();
-		for(int x=0; x<dfc.length; x++){
-			
-			b.append(dfc[x]);
-		}
-		System.out.println(new String(dfc));
-		
-		
-	}
-	
-	@Test
-	public void itGeneratesTheGSIBlock() throws Exception{
+	public void itGeneratesTheGSIBlock() throws Exception {
 		final StlFile stl = undertest.parseToStlFormat();
 		assertNotNull(stl.getGsiBlock());
 	}
-	
+
 	@Test
-	public void itGeneratesACorrectCodePageNumber() throws Exception{
+	public void itGeneratesACorrectCodePageNumber() throws Exception {
 		final CodePageNumber codePageNumber = undertest.parseToStlFormat()
-												.getGsiBlock().getCodePageNumber();
+				.getGsiBlock().getCodePageNumber();
 		assertThat(codePageNumber.characterSet(), is("Multilingual"));
 	}
-	
+
 	@Test
-	public void itGeneratesACorrectDisplayStandardCode(){
-		
+	public void itGeneratesACorrectDisplayStandardCode() throws Exception {
+		final DisplayStandardCode dsc = undertest.parseToStlFormat()
+				.getGsiBlock().getDisplayStandardCode();
+		DisplayStandardCode expected = new DisplayStandardCode(0);
+		assertThat(dsc, is(expected));
 	}
-	
+
 }
