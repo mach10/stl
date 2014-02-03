@@ -3,7 +3,9 @@ package uk.co.robshield.stl.domain;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CodePageNumber {
+import uk.co.robshield.stl.GSIComponent;
+
+public class CodePageNumber extends GSIComponent {
 
 	private static Map<Integer, String> codeMap = new HashMap<Integer,String>();
 	private final int code;

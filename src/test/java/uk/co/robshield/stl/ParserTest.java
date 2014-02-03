@@ -3,6 +3,7 @@ package uk.co.robshield.stl;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -22,6 +23,7 @@ import static org.junit.Assert.assertNotNull;
 import uk.co.robshield.stl.domain.CodePageNumber;
 import uk.co.robshield.stl.domain.DisplayStandardCode;
 import uk.co.robshield.stl.domain.StlFile;
+import uk.co.robshield.stl.query.CodePageNumberQuery;
 
 public class ParserTest {
 
@@ -31,7 +33,7 @@ public class ParserTest {
 	private Parser undertest;
 
 	@Before
-	public void setUp() {
+	public void setUp() throws FileNotFoundException {
 		rawSTL = ClassLoader.getSystemResource(FILENAME);
 		stlInput = new File(rawSTL.getPath()).toPath();
 		undertest = new Parser(stlInput);
@@ -45,15 +47,13 @@ public class ParserTest {
 
 	@Test
 	public void itGeneratesACorrectCodePageNumber() throws Exception {
-		final CodePageNumber codePageNumber = undertest.parseToStlFormat()
-				.getGsiBlock().getCodePageNumber();
+		final CodePageNumber codePageNumber = (CodePageNumber) undertest.findGSIComponent(new CodePageNumberQuery());
 		assertThat(codePageNumber.characterSet(), is("Multilingual"));
 	}
 
 	@Test
 	public void itGeneratesACorrectDisplayStandardCode() throws Exception {
-		final DisplayStandardCode dsc = undertest.parseToStlFormat()
-				.getGsiBlock().getDisplayStandardCode();
+		final DisplayStandardCode dsc = undertest.parseToStlFormat().getGsiBlock().getDisplayStandardCode();
 		DisplayStandardCode expected = new DisplayStandardCode(0);
 		assertThat(dsc, is(expected));
 	}

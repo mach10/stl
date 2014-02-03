@@ -3,7 +3,9 @@ package uk.co.robshield.stl.domain;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DisplayStandardCode {
+import uk.co.robshield.stl.GSIComponent;
+
+public class DisplayStandardCode extends GSIComponent{
 	
 	private final static Map<Integer,String> codeStandards = new HashMap<Integer,String>();
 	private final static Map<String,Integer> hexMap = new HashMap<String,Integer>();

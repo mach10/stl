@@ -18,6 +18,7 @@ import uk.co.robshield.stl.domain.DiskFormatCode;
 import uk.co.robshield.stl.domain.DisplayStandardCode;
 import uk.co.robshield.stl.domain.GSIBlock;
 import uk.co.robshield.stl.domain.StlFile;
+import uk.co.robshield.stl.query.CodePageNumberQuery;
 
 public class Parser {
 
@@ -25,9 +26,11 @@ public class Parser {
 	private static final int GSI_LENGTH = 1024;
 	private static final int CPN_LENGTH = 3;
 	private final Path stlFile;
+	private final InputStream in;
 	
-	public Parser(Path path){
+	public Parser(Path path) throws FileNotFoundException{
 		this.stlFile = path;
+		in = new FileInputStream(this.stlFile.toFile());
 	}
 	
 	public StlFile parseToStlFormat() throws IOException{
@@ -41,7 +44,6 @@ public class Parser {
 	private GSIBlock parseGSIBlock() throws FileNotFoundException, IOException {
 		final byte[] gsiBlock = new byte[GSI_LENGTH];
 		
-		final InputStream in = new FileInputStream(this.stlFile.toFile());
 		in.read(gsiBlock);
 		
 		//we have dumped the entire GSI Block into out
@@ -88,6 +90,15 @@ public class Parser {
 			file = stlFile.toFile();
 		}
 		return file.toPath();
+	}
+
+	public GSIComponent findGSIComponent(
+			GSIComponentQuery query) throws IOException {
+		final byte[] gsiBlock = new byte[GSI_LENGTH];
+		
+		in.read(gsiBlock);
+		// TODO Auto-generated method stub
+		return query.find(gsiBlock);
 	}
 	
 	
