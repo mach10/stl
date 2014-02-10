@@ -3,7 +3,9 @@ package uk.co.robshield.stl.domain;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class DiskFormatCode {
+import uk.co.robshield.stl.GSIComponent;
+
+public class DiskFormatCode extends GSIComponent{
 
 	
 	private String code;

@@ -15,7 +15,7 @@ public class CodePageNumberQuery implements GSIComponentQuery {
 	public GSIComponent find(byte[] src) {
 		//the first 3 bytes are the CodePageNumber
 		final byte[] codePageNumber = Arrays.copyOfRange(src, 0, CPN_LENGTH);
-		//to get the code, we take chars 2,4 and 6 of the Hex value and concat
+	
 		final String cpn = Hex.encodeHexString( codePageNumber );
 		StringBuilder b = new StringBuilder(cpn.substring(1, 2));
 		b.append(cpn.substring(3,4));

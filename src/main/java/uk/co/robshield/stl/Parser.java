@@ -33,57 +33,6 @@ public class Parser {
 		in = new FileInputStream(this.stlFile.toFile());
 	}
 	
-	public StlFile parseToStlFormat() throws IOException{
-		//byte[] data = new byte[(int) this.stlFile.toFile().length()];
-		//first pull out the GSI Block
-		return new StlFile(parseGSIBlock());
-		
-		
-	}
-
-	private GSIBlock parseGSIBlock() throws FileNotFoundException, IOException {
-		final byte[] gsiBlock = new byte[GSI_LENGTH];
-		
-		in.read(gsiBlock);
-		
-		//we have dumped the entire GSI Block into out
-		//into gsiBlock
-		//EBU defined block is first 448 bytes of the GSI Block
-	    //final byte[] ebuBlock = Arrays.copyOfRange(gsiBlock, 0, EBU_LENGTH);
-		
-		
-		
-		
-		return new GSIBlock( parseCodePageNumber(gsiBlock), 
-				parseDiskFormatCode(gsiBlock),
-				parseDisplayStandardCode(gsiBlock));
-	}
-
-	private DisplayStandardCode parseDisplayStandardCode(byte[] gsiBlock) {
-		final byte[] codePageNumber = Arrays.copyOfRange(gsiBlock, 12, 13);
-		//to get the code, we take chars 2,4 and 6 of the Hex value and concat
-		final String cpn = Hex.encodeHexString( codePageNumber );
-		
-		return new DisplayStandardCode(cpn);
-	}
-
-	private CodePageNumber parseCodePageNumber(final byte[] gsiBlock) {
-		//the first 3 bytes are the CodePageNumber
-		final byte[] codePageNumber = Arrays.copyOfRange(gsiBlock, 0, CPN_LENGTH);
-		//to get the code, we take chars 2,4 and 6 of the Hex value and concat
-		final String cpn = Hex.encodeHexString( codePageNumber );
-		StringBuilder b = new StringBuilder(cpn.substring(1, 2));
-		b.append(cpn.substring(3,4));
-		b.append(cpn.substring(5,6));
-		
-		return new CodePageNumber(Integer.valueOf(b.toString()));
-	}
-	
-	private DiskFormatCode parseDiskFormatCode(byte[] src){
-		final byte[] dfc = Arrays.copyOfRange(src, 3, 11);
-		return new DiskFormatCode(new String(dfc));
-	}
-	
 	public Path getStlFile() {
 		File file;
 		synchronized(stlFile){
@@ -95,9 +44,7 @@ public class Parser {
 	public GSIComponent findGSIComponent(
 			GSIComponentQuery query) throws IOException {
 		final byte[] gsiBlock = new byte[GSI_LENGTH];
-		
 		in.read(gsiBlock);
-		// TODO Auto-generated method stub
 		return query.find(gsiBlock);
 	}
 	

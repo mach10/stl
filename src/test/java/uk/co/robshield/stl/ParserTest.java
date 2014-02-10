@@ -1,29 +1,24 @@
 package uk.co.robshield.stl;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
-import java.nio.file.Path;
-import java.util.Arrays;
-
-import org.apache.commons.codec.binary.Hex;
-import org.apache.commons.io.HexDump;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-import static org.hamcrest.Matchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertNotNull;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.net.URL;
+import java.nio.file.Path;
+
+import org.junit.Before;
+import org.junit.Test;
+
 import uk.co.robshield.stl.domain.CodePageNumber;
+import uk.co.robshield.stl.domain.DiskFormatCode;
 import uk.co.robshield.stl.domain.DisplayStandardCode;
 import uk.co.robshield.stl.domain.StlFile;
 import uk.co.robshield.stl.query.CodePageNumberQuery;
+import uk.co.robshield.stl.query.DiskFormatCodeQuery;
+import uk.co.robshield.stl.query.DisplayStandardCodeQuery;
 
 public class ParserTest {
 
@@ -40,20 +35,20 @@ public class ParserTest {
 	}
 
 	@Test
-	public void itGeneratesTheGSIBlock() throws Exception {
-		final StlFile stl = undertest.parseToStlFormat();
-		assertNotNull(stl.getGsiBlock());
-	}
-
-	@Test
 	public void itGeneratesACorrectCodePageNumber() throws Exception {
 		final CodePageNumber codePageNumber = (CodePageNumber) undertest.findGSIComponent(new CodePageNumberQuery());
 		assertThat(codePageNumber.characterSet(), is("Multilingual"));
 	}
+	
+	@Test
+	public void itFindsTheDiskFormatCode() throws Exception {
+		final DiskFormatCode dfc = (DiskFormatCode) undertest.findGSIComponent( new DiskFormatCodeQuery() );
+		assertThat(dfc.getFramesPerSecond(), is(25));
+	}
 
 	@Test
 	public void itGeneratesACorrectDisplayStandardCode() throws Exception {
-		final DisplayStandardCode dsc = undertest.parseToStlFormat().getGsiBlock().getDisplayStandardCode();
+		final DisplayStandardCode dsc = (DisplayStandardCode) undertest.findGSIComponent( new DisplayStandardCodeQuery() );
 		DisplayStandardCode expected = new DisplayStandardCode(0);
 		assertThat(dsc, is(expected));
 	}
