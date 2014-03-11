@@ -36,19 +36,19 @@ public class ParserTest {
 
 	@Test
 	public void itGeneratesACorrectCodePageNumber() throws Exception {
-		final CodePageNumber codePageNumber = (CodePageNumber) undertest.findGSIComponent(new CodePageNumberQuery());
+		final CodePageNumber codePageNumber = undertest.findCodePageNumber();
 		assertThat(codePageNumber.characterSet(), is("Multilingual"));
 	}
 	
 	@Test
 	public void itFindsTheDiskFormatCode() throws Exception {
-		final DiskFormatCode dfc = (DiskFormatCode) undertest.findGSIComponent( new DiskFormatCodeQuery() );
+		final DiskFormatCode dfc = undertest.findDiskFormatCode();
 		assertThat(dfc.getFramesPerSecond(), is(25));
 	}
 
 	@Test
 	public void itGeneratesACorrectDisplayStandardCode() throws Exception {
-		final DisplayStandardCode dsc = (DisplayStandardCode) undertest.findGSIComponent( new DisplayStandardCodeQuery() );
+		final DisplayStandardCode dsc = undertest.findDisplayStandardCode();
 		DisplayStandardCode expected = new DisplayStandardCode(0);
 		assertThat(dsc, is(expected));
 	}

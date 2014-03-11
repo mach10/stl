@@ -8,11 +8,11 @@ import uk.co.robshield.stl.GSIComponent;
 import uk.co.robshield.stl.GSIComponentQuery;
 import uk.co.robshield.stl.domain.CodePageNumber;
 
-public class CodePageNumberQuery implements GSIComponentQuery {
+public class CodePageNumberQuery implements GSIComponentQuery<CodePageNumber> {
 
 	private static final int CPN_LENGTH = 3;
 
-	public GSIComponent find(byte[] src) {
+	public CodePageNumber find(byte[] src) {
 		//the first 3 bytes are the CodePageNumber
 		final byte[] codePageNumber = Arrays.copyOfRange(src, 0, CPN_LENGTH);
 	

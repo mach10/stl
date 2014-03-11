@@ -1,6 +1,6 @@
 package uk.co.robshield.stl;
 
-public interface GSIComponentQuery{
+public interface GSIComponentQuery<T>{
 
-	public GSIComponent find(byte[] src);
+	public T find(byte[] src);
 }
