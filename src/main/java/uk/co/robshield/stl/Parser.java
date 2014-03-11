@@ -1,24 +1,11 @@
 package uk.co.robshield.stl;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.nio.file.Path;
-import java.util.Arrays;
-
-import org.apache.commons.codec.binary.Hex;
-import org.apache.commons.io.HexDump;
-
-import uk.co.robshield.stl.domain.CodePageNumber;
-import uk.co.robshield.stl.domain.DiskFormatCode;
-import uk.co.robshield.stl.domain.DisplayStandardCode;
-import uk.co.robshield.stl.domain.GSIBlock;
-import uk.co.robshield.stl.domain.StlFile;
-import uk.co.robshield.stl.query.CodePageNumberQuery;
 
 public class Parser {
 

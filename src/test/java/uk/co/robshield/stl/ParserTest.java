@@ -12,10 +12,12 @@ import java.nio.file.Path;
 import org.junit.Before;
 import org.junit.Test;
 
+import uk.co.robshield.stl.domain.CharacterCode;
 import uk.co.robshield.stl.domain.CodePageNumber;
 import uk.co.robshield.stl.domain.DiskFormatCode;
 import uk.co.robshield.stl.domain.DisplayStandardCode;
 import uk.co.robshield.stl.domain.StlFile;
+import uk.co.robshield.stl.query.CharacterCodeQuery;
 import uk.co.robshield.stl.query.CodePageNumberQuery;
 import uk.co.robshield.stl.query.DiskFormatCodeQuery;
 import uk.co.robshield.stl.query.DisplayStandardCodeQuery;
@@ -51,6 +53,13 @@ public class ParserTest {
 		final DisplayStandardCode dsc = (DisplayStandardCode) undertest.findGSIComponent( new DisplayStandardCodeQuery() );
 		DisplayStandardCode expected = new DisplayStandardCode(0);
 		assertThat(dsc, is(expected));
+	}
+	
+	@Test
+	public void itGeneratesTheCorrectCharacterCode() throws Exception {
+		final CharacterCode cc = (CharacterCode) undertest.findGSIComponent(new CharacterCodeQuery());
+		CharacterCode expected = new CharacterCode("3030");
+		assertThat(cc, is(expected));
 	}
 
 }
