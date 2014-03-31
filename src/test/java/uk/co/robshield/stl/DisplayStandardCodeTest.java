@@ -2,7 +2,7 @@ package uk.co.robshield.stl;
 
 import org.junit.Test;
 
-import uk.co.robshield.stl.domain.DisplayStandardCode;
+import uk.co.robshield.stl.domain.gsi.DisplayStandardCode;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 

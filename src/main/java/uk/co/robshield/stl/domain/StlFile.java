@@ -3,6 +3,8 @@ package uk.co.robshield.stl.domain;
 import java.util.LinkedList;
 import java.util.List;
 
+import uk.co.robshield.stl.domain.gsi.GSIBlock;
+
 public class StlFile {
 
 	private GSIBlock gsiBlock;

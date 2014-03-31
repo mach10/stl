@@ -12,15 +12,19 @@ import java.nio.file.Path;
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.co.robshield.stl.domain.CharacterCode;
-import uk.co.robshield.stl.domain.CodePageNumber;
-import uk.co.robshield.stl.domain.DiskFormatCode;
-import uk.co.robshield.stl.domain.DisplayStandardCode;
 import uk.co.robshield.stl.domain.StlFile;
-import uk.co.robshield.stl.query.CharacterCodeQuery;
-import uk.co.robshield.stl.query.CodePageNumberQuery;
-import uk.co.robshield.stl.query.DiskFormatCodeQuery;
-import uk.co.robshield.stl.query.DisplayStandardCodeQuery;
+import uk.co.robshield.stl.domain.gsi.CharacterCode;
+import uk.co.robshield.stl.domain.gsi.CodePageNumber;
+import uk.co.robshield.stl.domain.gsi.DiskFormatCode;
+import uk.co.robshield.stl.domain.gsi.DisplayStandardCode;
+import uk.co.robshield.stl.domain.gsi.LanguageCode;
+import uk.co.robshield.stl.domain.gsi.OriginalProgrammeTitle;
+import uk.co.robshield.stl.query.gsi.CharacterCodeQuery;
+import uk.co.robshield.stl.query.gsi.CodePageNumberQuery;
+import uk.co.robshield.stl.query.gsi.DiskFormatCodeQuery;
+import uk.co.robshield.stl.query.gsi.DisplayStandardCodeQuery;
+import uk.co.robshield.stl.query.gsi.LanguageCodeQuery;
+import uk.co.robshield.stl.query.gsi.OriginalProgrammeTitleQuery;
 
 public class ParserTest {
 
@@ -60,6 +64,20 @@ public class ParserTest {
 		final CharacterCode cc = (CharacterCode) undertest.findGSIComponent(new CharacterCodeQuery());
 		CharacterCode expected = new CharacterCode("3030");
 		assertThat(cc, is(expected));
+	}
+	
+	@Test
+	public void itGeneratesTheCorrectLanguageCode() throws Exception {
+		final LanguageCode lc = (LanguageCode) undertest.findGSIComponent( new LanguageCodeQuery() );
+		LanguageCode expected = new LanguageCode("09");
+		assertThat(lc, is(expected));
+	}
+	
+	@Test
+	public void itTellsUsTheCorrectOrignalProgrammeTitle() throws Exception {
+		final OriginalProgrammeTitle opt = (OriginalProgrammeTitle) undertest.findGSIComponent( new OriginalProgrammeTitleQuery() );
+		final OriginalProgrammeTitle expected = new OriginalProgrammeTitle("THE GOOD SHEPHERD");
+		assertThat(opt, is(expected));
 	}
 
 }
